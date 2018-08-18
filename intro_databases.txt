@@ -1,0 +1,72 @@
+1. What data types do each of these values represent?
+
+a. ”A Clockwork Orange" - string
+b. 42 - integer 
+c. 09/02/1945 - string
+d. 98.7 - float
+e. $15.99 - decimal
+
+
+2. Explain when a database would be used. Explain when a text file would be used.
+A database would be used when the data needs to be searchable/retrievable, able to be changed/amended, when multiple applications may need to assess the data, and that can live outside of the program. A text file can be used when the data is small and does not need to be manipulated in the same way, or is only used within a small program and then does not need to be accessed outside of that program.
+
+3. Describe one difference between SQL and other programming languages.
+SQL is a declarative, rather than a procedural language.
+
+4. In your own words, explain how the pieces of a database system fit together at a high level.
+A database is typically a table that sorts items by row, column and value. These fit together because the columns define the type/category of the data, while each row represents an instance of the data. The table is the entire collection of data, and each single cell/value is comprised of a unique value that is that grouped with other data types as defined by the column and row.
+
+5. Explain the meaning of table, row, column, and value.
+a. table - entire collection of data
+b. Row - represents individual instances of the data (i.e. individual purchases in a checkbook)
+c. column - like types of data stored together, such as ‘dates’ or ‘stores’ in the checkbook example
+d. value - the specific piece of data within in each cell of the table
+
+6. List three data types that can be used in a table.
+a. string
+b. object
+c. integer
+
+7. 
+a. I’m looking for the dates and amounts from the payment table.
+dates		amounts
+2016-05-01	1500.00
+2016-05-10       37.00
+2016-05-15	  124.93
+2016-05-23	   54.72
+
+b. I’m looking for amounts less than $500 from the payment table.
+
+amounts
+37.00
+124.93
+54.72
+
+c. I’m looking for all columns from the payments table where the payee was “Mega Foods”.
+
+date		payee		amount		memo
+'2016-05-15'	'Mega Foods'	124.93		 'Groceries'
+
+8.
+a.	SELECT signup, email
+	FROM users
+	WHERE name = ‘DeAndre Data’;
+
+email			signup
+'datad@comcast.net'	'2008-01-20')
+
+b.	SELECT userid
+	FROM users
+	WHERE email = ‘aleesia.algorithm@uw.edu’;
+
+userid
+1
+
+c.	SELECT *
+	FROM users
+	WHERE userid = 4;
+
+userid		name			email			signup
+4       	'Brandy Boolean'   	'bboolean@nasa.gov'    '1999-10-15');
+
+
