@@ -47,6 +47,27 @@ SELECT volunteers.first_name, volunteers.last_name, dogs.name
 FROM volunteers
 LEFT OUTER JOIN dogs ON dogs.id = volunteers.foster_dog_id;
 
+Results:
+---
+
+**Query #1**
+
+    SELECT volunteers.first_name, volunteers.last_name, dogs.name
+    FROM volunteers
+    LEFT OUTER JOIN dogs ON dogs.id = volunteers.foster_dog_id;
+
+| first_name | last_name  | name      |
+| ---------- | ---------- | --------- |
+| Rubeus     | Hagrid     | Munchkin  |
+| Marjorie   | Dursley    | Marmaduke |
+| Sirius     | Black      |           |
+| Remus      | Lupin      |           |
+| Albus      | Dumbledore |           |
+
+---
+
+[View on DB Fiddle](https://www.db-fiddle.com/f/tpodLv3A43VL4gHqohqx2o/0)
+
 
 b. The cat's name, adopter's name, and adopted date for each cat adopted within the past month to be displayed as part of the "Happy Tail" social media promotion which posts recent successful adoptions.
 
@@ -57,6 +78,25 @@ JOIN cats ON cat_adoptions.cat_id = cats.id
 WHERE cat_adoptions.date > CURRENT_DATE - INTERVAL '30 DAYS';
 
 
+---
+
+**Query #1**
+
+    SELECT cats.name, adopters.first_name, adopters.last_name, cat_adoptions.date
+    FROM cat_adoptions
+    JOIN adopters ON cat_adoptions.adopter_id = adopters.id
+    JOIN cats ON cat_adoptions.cat_id = cats.id
+    WHERE cat_adoptions.date > CURRENT_DATE - INTERVAL '30 DAYS';
+
+| name     | first_name | last_name | date                     |
+| -------- | ---------- | --------- | ------------------------ |
+| Mushi    | Arabella   | Figg      | 2018-08-10T00:00:00.000Z |
+| Victoire | Argus      | Filch     | 2018-08-15T00:00:00.000Z |
+
+---
+
+[View on DB Fiddle](https://www.db-fiddle.com/f/tpodLv3A43VL4gHqohqx2o/0)
+
 c. Create a list of adopters who have not yet chosen a dog to adopt.
 SELECT adopters.first_name, adopters.last_name
 FROM adopters
@@ -64,6 +104,22 @@ LEFT JOIN dog_adoptions ON adopters.id = dog_adoptions.adopter_id
 WHERE adopters.id != 3;
 
 
+**Query #1**
+
+    SELECT adopters.first_name, adopters.last_name
+    FROM adopters
+    LEFT OUTER JOIN dog_adoptions ON 
+    adopters.id = dog_adoptions.adopter_id
+    WHERE adopters.id != 3;
+
+| first_name | last_name |
+| ---------- | --------- |
+| Arabella   | Figg      |
+| Hermione   | Granger   |
+
+---
+
+[View on DB Fiddle](https://www.db-fiddle.com/f/tpodLv3A43VL4gHqohqx2o/0)
 d. Lists of all cats and all dogs who have not been adopted.
 
 SELECT * 
@@ -74,11 +130,51 @@ FULL OUTER JOIN cats ON cats.id = cat_adoptions.cat_id
 WHERE dog_adoptions.dog_id IS NULL AND cat_adoptions.cat_id IS NULL;
 
 
+---
+
+**Query #1**
+
+    SELECT * 
+    FROM dog_adoptions
+    FULL OUTER JOIN cat_adoptions ON true
+    FULL OUTER JOIN dogs ON dogs.id = dog_adoptions.dog_id
+    FULL OUTER JOIN cats ON cats.id = cat_adoptions.cat_id 
+    WHERE dog_adoptions.dog_id IS NULL AND cat_adoptions.cat_id IS NULL;
+
+| adopter_id | dog_id | date | fee | adopter_id | cat_id | date | fee | id    | name      | gender | age | weight | breed              | intake_date              | in_foster | id  | name     | gender | age | intake_date              | adoption_date |
+| ---------- | ------ | ---- | --- | ---------- | ------ | ---- | --- | ----- | --------- | ------ | --- | ------ | ------------------ | ------------------------ | --------- | --- | -------- | ------ | --- | ------------------------ | ------------- |
+|            |        |      |     |            |        |      |     | 10002 | Munchkin  | F      | 0   | 8      | dachsund chihuahua | 2017-01-13T00:00:00.000Z |           |     |          |        |     |                          |               |
+|            |        |      |     |            |        |      |     | 10001 | Boujee    | F      | 3   | 36     | labrador poodle    | 2017-06-22T00:00:00.000Z |           |     |          |        |     |                          |               |
+|            |        |      |     |            |        |      |     | 10003 | Lassie    | F      | 7   | 17     | collie shepherd    | 2016-07-05T00:00:00.000Z |           |     |          |        |     |                          |               |
+|            |        |      |     |            |        |      |     | 10004 | Marley    | M      | 0   | 10     | labrador           | 2017-05-04T00:00:00.000Z |           |     |          |        |     |                          |               |
+|            |        |      |     |            |        |      |     | 10006 | Marmaduke | M      | 7   | 150    | great dane         | 2016-03-22T00:00:00.000Z |           |     |          |        |     |                          |               |
+|            |        |      |     |            |        |      |     |       |           |        |     |        |                    |                          |           | 2   | Seashell | F      | 7   | 2016-01-09T00:00:00.000Z |               |
+|            |        |      |     |            |        |      |     |       |           |        |     |        |                    |                          |           | 5   | Nala     | F      | 1   | 2016-01-12T00:00:00.000Z |               |
+
+---
+
+[View on DB Fiddle](https://www.db-fiddle.com/f/tpodLv3A43VL4gHqohqx2o/0)
 e. The name of the person who adopted Rosco.
 
 SELECT adopters.first_name, adopters.last_name
 FROM adopters
 JOIN dog_adoptions ON adopters.id = dog_adoptions.adopter_id;
+
+---
+
+**Query #1**
+
+    SELECT adopters.first_name, adopters.last_name
+    FROM adopters
+    JOIN dog_adoptions ON adopters.id = dog_adoptions.adopter_id;
+
+| first_name | last_name |
+| ---------- | --------- |
+| Argus      | Filch     |
+
+---
+
+[View on DB Fiddle](https://www.db-fiddle.com/f/tpodLv3A43VL4gHqohqx2o/0)
 
 8. Using this Library schema and data, write queries applying the following scenarios and include the results:
 
@@ -92,6 +188,24 @@ WHERE books.isbn = '9136884926'
 ORDER BY holds.rank;
 
 
+**Query #1**
+
+    SELECT patrons.name, holds.rank, books.isbn
+    FROM patrons
+    JOIN holds ON patrons.id = holds.patron_id
+    JOIN books ON books.isbn = holds.isbn
+    WHERE books.isbn = '9136884926'
+    ORDER BY holds.rank;
+
+| name           | rank | isbn       |
+| -------------- | ---- | ---------- |
+| Terry Boot     | 1    | 9136884926 |
+| Cedric Diggory | 2    | 9136884926 |
+
+---
+
+[View on DB Fiddle](https://www.db-fiddle.com/f/j4EGoWzHWDBVtiYzB9ygC4/0)
+
 b. List all of the library patrons. If they have one or more books checked out, list the books with the patrons.
 
 SELECT patrons.name, books.title
@@ -99,3 +213,28 @@ FROM transactions
 JOIN patrons ON transactions.patron_id = patrons.id
 JOIN books ON transactions.isbn = books.isbn
 ORDER BY patrons.name;
+    
+
+---
+
+**Query #1**
+
+    SELECT patrons.name, books.title
+    FROM transactions
+    JOIN patrons ON transactions.patron_id = patrons.id
+    JOIN books ON transactions.isbn = books.isbn
+    ORDER BY patrons.name;
+
+| name             | title                                   |
+| ---------------- | --------------------------------------- |
+| Cedric Diggory   | Fantastic Beasts and Where to Find Them |
+| Cho Chang        | Advanced Potion-Making                  |
+| Hermione Granger | Fantastic Beasts and Where to Find Them |
+| Hermione Granger | Hogwarts: A History                     |
+| Padma Patil      | Fantastic Beasts and Where to Find Them |
+| Terry Boot       | Advanced Potion-Making                  |
+| Terry Boot       | Fantastic Beasts and Where to Find Them |
+
+---
+
+[View on DB Fiddle](https://www.db-fiddle.com/f/j4EGoWzHWDBVtiYzB9ygC4/0)
